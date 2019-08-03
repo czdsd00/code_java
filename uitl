@@ -1,0 +1,68 @@
+
+public class util {
+    private static DataSource   ds ;
+    static {
+        //加载配置文件
+
+        try {
+            Properties pro = new Properties();
+            pro.load(util.class.getClassLoader().getResourceAsStream("druid.properties"));
+            //获取datasourse
+            ds  = DruidDataSourceFactory.createDataSource(pro);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //获取连接
+
+
+    }
+    public static Connection getConnection() throws SQLException {
+        return ds.getConnection();
+    }
+    public static void close(Statement stmt, Connection conn){
+		       /* if(stmt != null){
+		            try {
+		                stmt.close();
+		            } catch (SQLException e) {
+		                e.printStackTrace();
+		            }
+		        }
+
+		        if(conn != null){
+		            try {
+		                conn.close();//归还连接
+		            } catch (SQLException e) {
+		                e.printStackTrace();}
+		            }*/
+
+
+        close(null,stmt,conn);
+}
+    public static void close(ResultSet rs , Statement stmt, Connection conn){
+
+
+         if(rs != null){
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+         if(stmt != null){
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+                    if(conn != null){
+            try {
+                conn.close();//归还连接
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+    }
+}
